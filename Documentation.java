@@ -7,6 +7,7 @@ public class Documentation {
     public static void main(String[] args) {
         greeting();
         System.out.println(greetingCoder("Alex", 41));
+        System.out.println(callingAGoddess("Perséfone"));
     }
 
     /**
@@ -46,6 +47,33 @@ public class Documentation {
     Perséfone: Hola soy Perséfone, la diosa de la primavera y el inframundo.
     Otro o vacío: ¡no la hemos encontrado aún!
     */
-     
 
+    /**
+     * Function name: callAGoddess
+     * 
+     * @param goddess (String)
+     * @return (String)
+     * 
+     * Inside the function
+     * 1. return de description of the goddess
+     * 
+     */
+     public static String callingAGoddess(String goddess) {
+        switch(goddess){
+            case "Afrodita":
+                return "Hola soy Afrodita, la diosa del amor y la belleza.";
+            case "Atenea":
+                return "Hola soy Atenea, la diosa de la sabiduría y la guerra estratégica.";
+            case "Artemisa":
+                return "Hola soy Artemisa, la diosa de la caza y la naturaleza salvaje.";
+            case "Hera":
+                return "Hola soy Hera, la diosa de los dioses y de la familia.";
+            case "Deméter":
+                return "Hola soy Deméter, la diosa de la cosecha y la agricultura.";
+            case "Perséfone":
+                return "Hola soy Perséfone, la diosa de la primavera y el inframundo.";
+            default:
+                return "¡No la hemos encontrado aún!";
+        }
+     }
 }

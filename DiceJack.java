@@ -1,6 +1,7 @@
+import java.util.Scanner;
+
 public class DiceJack {
     public static void main(String[] args) {
-
         /* 
         Reglas del juego:
         - El usuario debe escoger 3 números entre 1 y 6 (incluidos).
@@ -18,16 +19,97 @@ public class DiceJack {
         Requisitos no funcionales (atributos de calidad):
         - Definir las 4 funciones descritas abajo.
         - En el método main escribir el programa (usar condicionales, reusar las funciones creadas, pedir al usuario que ingrese datos y recogerlos).
-      
-        Pasos:
-        - Pedir al usuario que escoja 3 números.
-        - Si el usuario escoge un número fuera del rango, salir del programa (mira en los recursos system exit).
-        - Si los números son correctos, pedir al usuario si desea lanzar dados.
-        - Si el usuario dice que no, salir del programa.
-        - Si el usuario dice que si, lanzar dados, hacer los cálculos que indiquen si el usuario ganó o perdió.
-        - Imprimir la suma de los números escogidos por el usuario y la suma de los números que salieron en los dados.
-        - Imprimir si el usuario ganó o perdió.
         */
+
+        // Pasos:
+        //  - Pedir al usuario que escoja 3 números.
+        Scanner sc = new Scanner(System.in);
+        int numResult = 0;
+        int rollResult = 0;
+        boolean win = false;
+        
+        /* 1 */
+        System.out.print("Iniciando Dice Jack...\n¡Hola coder! Escoge 3 números entre 1 y 6, ambos incluidos.\nPrimer número: ");
+        int num1 = 0;
+        if (sc.hasNextInt()) {
+            num1 = sc.nextInt();
+            sc.nextLine();
+        } else {
+            System.out.println("Debes introducir un número. Saliendo del juego...");
+            System.exit(0);
+        }
+        
+        /* 2 */
+        System.out.print("Segundo número: ");
+        int num2 = 0;
+        if (sc.hasNextInt()) {
+            num2 = sc.nextInt();
+            sc.nextLine();
+        } else {
+            System.out.println("Debes introducir un número. Saliendo del juego...");
+            System.exit(0);
+        }
+
+        /* 3 */
+        System.out.print("Tercer número: ");
+        int num3 = 0;
+        if (sc.hasNextInt()) {
+            num3 = sc.nextInt();
+            sc.nextLine();
+        } else {
+            System.out.println("Debes introducir un número. Saliendo del juego...");
+            System.exit(0);
+        }
+        
+        numResult = num1 + num2 + num3;
+
+        //  - Si el usuario escoge un número fuera del rango, salir del programa (mira en los recursos system exit).
+        if (!isLessThanOne(num1, num2, num3) || !isHigherThanSix(num1, num2, num3)) {
+            System.exit(0);            
+        }
+
+        //  - Si los números son correctos, pedir al usuario si desea lanzar dados.
+        System.out.print("¿Deseas lanzar los dados? (si/no): ");
+        String res = sc.nextLine();
+        
+        //  - Si el usuario dice que no, salir del programa.
+        switch (res) {
+            case "n", "no":
+                System.out.println("Saliendo del juego...");
+                System.exit(0);
+                break;
+            //  - Si el usuario dice que si, lanzar dados, hacer los cálculos que indiquen si el usuario ganó o perdió.
+            case "s", "si":
+                int dice1 = rollDice();
+                int dice2 = rollDice();
+                int dice3 = rollDice();
+                rollResult = dice1 + dice2 + dice3;
+
+                win = userWon(numResult, rollResult);
+
+                System.out.print("Dado 1: " + dice1);
+                System.out.print("\nDado 2: " + dice2);
+                System.out.print("\nDado 3: " + dice3);
+                
+                break;
+            default:
+                System.out.println("Algo falló. Saliendo del juego...");
+                System.exit(0);
+                break;   
+        }
+        
+        //  - Imprimir la suma de los números escogidos por el usuario y la suma de los números que salieron en los dados.
+        System.out.print("\nSuma de los números: " + (numResult));
+        System.out.print("\nSuma de los dados: " + rollResult);
+        System.out.print("\n");
+        //  - Imprimir si el usuario ganó o perdió.
+        if (win) {
+            System.out.println("¡Has ganado!");
+        } else {
+            System.out.println("Has perdido... Suerte la próxima vez :)");
+        }
+
+        sc.close();
     }
 
 
@@ -43,9 +125,14 @@ public class DiceJack {
      * Inside the function:
      * 1. check if numbers are less than 1
      */
-    
-    // Escribe tu código aquí
-
+     public static boolean isLessThanOne(int num1, int num2, int num3) {
+        if ((num1 < 1) || (num2 < 1) || (num3 < 1)) {
+            System.out.println("No puedes escoger números más pequeños que 1");
+            return false;
+        } else {
+            return true;
+        }
+     }
 
     /**
      * 
@@ -59,9 +146,14 @@ public class DiceJack {
      * Inside the function:
      * 1. Check if numbers are greater than 6
      */
-
-    // Escribe tu código aquí
-
+     public static boolean isHigherThanSix(int num1, int num2, int num3) {
+        if ((num1 > 6) || (num2 > 6) || (num3 > 6)) {
+            System.out.println("No puedes escoger números más grandes que 6");
+            return false;
+        } else {
+            return true;
+        }
+     }
 
     /**
      * 
@@ -74,9 +166,13 @@ public class DiceJack {
      * Inside the function:
      * 1. check if user numbers are greater than computer numbers and the difference between user numbers and computer numbers are less than 5. 
      */
-
-    // Escribe tu código aquí
-
+     public static boolean userWon(int sumNumbers, int sumDiceRolls) {
+        if ((sumNumbers > sumDiceRolls) && (sumNumbers - sumDiceRolls <= 5)) {
+            return true;
+        } else {
+            return false;
+        }
+     }
 
     /**
      * Function name: rollDice
@@ -86,8 +182,9 @@ public class DiceJack {
      * Inside the function:
      * 1. get random number between 1 and 6
      */
-
-    // Escribe tu código aquí
+     public static int rollDice() {
+        return (int)(Math.random() * 6) + 1;
+     }
 
 
 }
